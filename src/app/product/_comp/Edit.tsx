@@ -8,14 +8,24 @@ import {
   ModalHeader,
 } from "@nextui-org/react";
 import React from "react";
-import Plus from "./svg/Plus";
-import ModalMain from "./comp/ModalBody";
+import ModalBody from "./ModalBody";
+type product = {
+  id: string;
+  imageUrl: string | null;
+  name: string;
+  count: number;
+  width: number;
+  heigth: number;
+  weigth: number;
+} | null;
 
-export default function Nav() {
+export default function Edit({ product }: { product: product }) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-
   return (
-    <nav className="flex h-[6dvh] w-full items-center justify-between bg-white px-4">
+    <>
+      <Button color="primary" onClick={onOpen}>
+        Edit
+      </Button>
       <Modal isOpen={isOpen} placement="center" onOpenChange={onOpenChange}>
         <ModalContent>
           {(onClose) => (
@@ -23,16 +33,11 @@ export default function Nav() {
               <ModalHeader className="flex flex-col gap-1">
                 Add new product
               </ModalHeader>
-              <ModalMain onClose={onClose} />
+              <ModalBody onClose={onClose} product={product} />
             </>
           )}
         </ModalContent>
       </Modal>
-      <span className="text-xl font-medium ">Test Shop App</span>
-      <Button color="primary" onClick={onOpen}>
-        <Plus />
-        Add
-      </Button>
-    </nav>
+    </>
   );
 }
